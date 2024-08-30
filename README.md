@@ -1,3 +1,21 @@
+# Trivia app
+
+## Notes
+
+_These notes serve to explain my process and considerations during development._
+
+After reading the instructions, this is my plan for approaching this challenge:
+
+1. Rewrite the instructions in my own words to make sure I fully understand the requirements.
+2. Explore the OpenTrivia API and find out how I can get the data I need.
+3. Create designs for the views. Two views are mentioned, but we might want a third view for the outcome of the quiz.
+4. Write the basic app logic using the Test Driven Development approach to ensure the logic is tested and avoid redundancy.
+5. Implement the designs from step 3.
+6. Consider adding a twist, perhaps a leader board or a timer.
+7. Submit my work.
+
+## Original Instructions
+
 ### Introduction
 
 The purpose of this assignment is for the developer to exhibit their familiarity with front-end technologies, programming patterns and to provide a sample of what clean and reusable code means.
@@ -6,9 +24,9 @@ You should spend between 4 and 6 hours on this, depending on your familiarity wi
 
 ### How to succeed
 
-* Fellow engineers will be reading and reviewing your code - try to imagine how you would want to review someone else's code. What would you like to see?
-* Perfect is the enemy of done! We're looking to assess your technical capabilities, not what type of app you would build if you would have unlimited time available. As a business we're always balancing time and quality. When making trade-offs to optimize for time - be explicit!
-* Write code in your own way - you should be able to explain your reasoning later on. It's good to look at best practices, but make sure you understand _why_ they're best practices to begin with.
+- Fellow engineers will be reading and reviewing your code - try to imagine how you would want to review someone else's code. What would you like to see?
+- Perfect is the enemy of done! We're looking to assess your technical capabilities, not what type of app you would build if you would have unlimited time available. As a business we're always balancing time and quality. When making trade-offs to optimize for time - be explicit!
+- Write code in your own way - you should be able to explain your reasoning later on. It's good to look at best practices, but make sure you understand _why_ they're best practices to begin with.
 
 ### Technical requirements
 
@@ -33,6 +51,4 @@ The app should adhere to the following requirements:
 - At Homerun, we value good design. Of course we’re looking for a developer and not a designer - but be mindful of what type of UX you're creating.
 - Feel free to add your own twist to the game - but make sure that you satisfy the requirements written above!
 
-
 Feel free to arrange the scaffolding of the application the way you want: the current one is the default template from `create-vue`
-
