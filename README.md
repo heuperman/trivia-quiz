@@ -34,6 +34,8 @@ npm run lint
 
 _These notes serve to explain my process and considerations during development._
 
+### Plan
+
 After reading the instructions, this is my plan for approaching this challenge:
 
 1. Rewrite the instructions in my own words to make sure I fully understand the requirements.
@@ -43,6 +45,14 @@ After reading the instructions, this is my plan for approaching this challenge:
 5. Implement the designs from step 3.
 6. Consider adding a twist, perhaps a leader board or a timer.
 7. Submit my work.
+
+### OpenTrivia API
+
+We will need to request a session token for each new quiz. We can then use that token to fetch a specified amount of questions and answers in JSON format. We can get questions of a specific difficulty using a query parameter.
+
+By default it will return a mix of categories and types of questions which is what we want for now, but this can also be controlled with a query parameter. The default encoding uses HTML Codes which is what we need.
+
+There is also a response code included in the request, which we can use for error handling if needed.
 
 ## Original Instructions
 
