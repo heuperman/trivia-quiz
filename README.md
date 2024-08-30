@@ -64,9 +64,9 @@ To work out the layout for the app, I made some sketches on paper. The designs c
 
 Desktop and tablet layouts could be made and the sketches could be turned into more detailed designs using something like Figma, but I think this will be sufficient for this simple app.
 
-We can already determine from these sketches that we can create a reusable button component with a primary and secondary colour scheme, as well as a button group that can hold 2 or three buttons.
+We can already determine from these sketches that we can create a reusable button component with a primary and secondary colour scheme, as well as a button group that can hold two or three buttons.
 
-For the palette I'll be using some nice colours I found online ;) The fonts will come from Google Fonts. For the title we've got Acme, a cartoony font, and for the main text we'll have Lato, a simple rounded font. These fonts match the fun & playful nature of the app.
+For the palette I'll be using some nice colours I found online 😉 The fonts will come from Google Fonts. For the title we've got Acme, a cartoony font, and for the main text we'll have Lato, a simple rounded font. These fonts match the fun & playful nature of the app.
 
 ## Original Instructions
 
