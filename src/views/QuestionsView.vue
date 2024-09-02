@@ -1,7 +1,9 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores/questions'
 import { htmlDecode, shuffleArray } from '@/lib/helpers'
 
+const router = useRouter()
 const questionsStore = useQuestionsStore()
 
 function getAnswers(question) {
@@ -14,7 +16,12 @@ function handleAnswerClick(answer) {
     if (answer === questionsStore.getCurrentQuestion.correct_answer) {
         questionsStore.incrementScore()
     }
-    questionsStore.incrementQuestionIndex()
+
+    if (questionsStore.currentQuestionIndex >= 9) {
+        router.push('/result')
+    } else {
+        questionsStore.incrementQuestionIndex()
+    }
 }
 </script>
 
