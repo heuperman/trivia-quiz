@@ -1,13 +1,37 @@
-import { beforeEach, describe, it, expect, vi } from 'vitest'
+import { beforeAll, describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import { setActivePinia, createPinia } from 'pinia'
+import { createTestingPinia } from '@pinia/testing'
+import { useQuestionsStore } from '@/stores/questions'
+import { mockQuestions } from '@/lib/constants'
+import HomeView from '@/views/HomeView.vue'
 
-import { mount, flushPromises } from '@vue/test-utils'
-import HomeView from '../../views/HomeView.vue'
+const mockRouterPush = vi.fn()
+
+vi.mock('vue-router', async () => {
+  return {
+    RouterView: {},
+    useRouter: () => {
+      return {
+        push: mockRouterPush
+      }
+    }
+  }
+})
 
 describe('HomeView', () => {
   let wrapper
 
-  beforeEach(() => {
-    wrapper = mount(HomeView)
+  beforeAll(() => {
+    setActivePinia(createPinia())
+    global.fetch = vi.fn().mockImplementation((url) => {
+      if (url.includes('api_token')) {
+        return Promise.resolve({ json: () => Promise.resolve({ token: 'mocked-token' }) })
+      } else {
+        return Promise.resolve({ json: () => Promise.resolve({ results: mockQuestions }) })
+      }
+    })
+    wrapper = mount(HomeView, { plugins: [createTestingPinia({ createSpy: vi.fn })] })
   })
 
   it('renders the title', () => {
@@ -27,14 +51,33 @@ describe('HomeView', () => {
   })
 
   it('fetches a session token and updates the sessionToken ref on mount', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      json: () => Promise.resolve({ token: 'mocked-token' })
-    })
-
-    wrapper = mount(HomeView)
-
-    await flushPromises()
-
     expect(wrapper.vm.sessionToken).toBe('mocked-token')
+  })
+
+  it('fetches questions using the session token and difficulty on start click', async () => {
+    const select = wrapper.find('select')
+    await select.setValue('easy')
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(fetch).toHaveBeenCalledWith(
+      'https://opentdb.com/api.php?amount=10&difficulty=easy&token=mocked-token'
+    )
+  })
+
+  it('updates the questions store with the fetched questions', async () => {
+    const questionsStore = useQuestionsStore()
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(questionsStore.setQuestions).toHaveBeenCalledWith(mockQuestions)
+  })
+
+  it('pushes the questions route on start click', async () => {
+    const button = wrapper.find('button')
+    await button.trigger('click')
+    expect(mockRouterPush).toHaveBeenCalledWith('/questions')
   })
 })
