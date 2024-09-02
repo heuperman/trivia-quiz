@@ -32,7 +32,7 @@ describe('QuestionsView', () => {
     expect(question.text()).toContain(mockQuestions[0].question)
   })
 
-  it('renders the answers in a random order', () => {
+  it('renders the answers in a random order if it is a multiple choice question', () => {
     const answers = wrapper.findAll('button').map((button) => button.text())
     expect(answers).toEqual(
       expect.arrayContaining([
@@ -44,5 +44,22 @@ describe('QuestionsView', () => {
       mockQuestions[0].correct_answer,
       ...mockQuestions[0].incorrect_answers
     ])
+  })
+
+  it('renders the answers in a the correct order if it is a boolean question', () => {
+    wrapper = mount(QuestionsView, {
+      plugins: [
+        createTestingPinia({
+          initialState: {
+            questions: { questions: mockQuestions, currentQuestionIndex: 1 }
+          },
+          createSpy: vi.fn
+        })
+      ]
+    })
+
+    const answerButtons = wrapper.findAll('button')
+    expect(answerButtons[0].text()).toEqual('True')
+    expect(answerButtons[1].text()).toEqual('False')
   })
 })

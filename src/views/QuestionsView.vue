@@ -4,7 +4,9 @@ import { htmlDecode, shuffleArray } from '@/lib/helpers'
 
 const questionsStore = useQuestionsStore()
 const currentQuestion = questionsStore.getCurrentQuestion
-const answers = shuffleArray([currentQuestion.correct_answer, ...currentQuestion.incorrect_answers])
+const answers = currentQuestion.type === 'boolean'
+    ? ['True', 'False']
+    : shuffleArray([currentQuestion.correct_answer, ...currentQuestion.incorrect_answers])
 </script>
 
 <template>

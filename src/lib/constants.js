@@ -12,5 +12,13 @@ export const mockQuestions = [
       'mock incorrect answer 2',
       'mock incorrect answer 3'
     ]
+  },
+  {
+    type: 'boolean',
+    difficulty: 'medium',
+    category: 'mock category',
+    question: 'mock question 2',
+    correct_answer: 'False',
+    incorrect_answers: ['True']
   }
 ]
