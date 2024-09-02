@@ -8,23 +8,24 @@ const router = useRouter()
 const questionsStore = useQuestionsStore()
 
 const difficulty = ref('medium')
-const sessionToken = ref('')
 
 async function setSessionToken() {
   const response = await fetch(`${openTriviaApiUrl}/api_token.php?command=request`)
   const data = await response.json()
-  sessionToken.value = data.token
+  questionsStore.setSessionToken(data.token)
 }
 
 async function startQuiz() {
-  const response = await fetch(`${openTriviaApiUrl}/api.php?amount=10&difficulty=${difficulty.value}&token=${sessionToken.value}`)
+  const response = await fetch(`${openTriviaApiUrl}/api.php?amount=10&difficulty=${difficulty.value}&token=${questionsStore.sessionToken}`)
   const data = await response.json()
   questionsStore.reset()
   questionsStore.setQuestions(data.results)
   router.push('/questions')
 }
 
-setSessionToken()
+if (!questionsStore.sessionToken) {
+  setSessionToken()
+}
 </script>
 
 <template>

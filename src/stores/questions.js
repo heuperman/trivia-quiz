@@ -4,7 +4,8 @@ export const useQuestionsStore = defineStore('questions', {
   state: () => ({
     questions: [],
     currentQuestionIndex: 0,
-    score: 0
+    score: 0,
+    sessionToken: ''
   }),
   getters: {
     getCurrentQuestion() {
@@ -24,6 +25,12 @@ export const useQuestionsStore = defineStore('questions', {
     reset() {
       this.currentQuestionIndex = 0
       this.score = 0
+    },
+    setSessionToken(sessionToken) {
+      this.sessionToken = sessionToken
+    },
+    clearSessionToken() {
+      this.sessionToken = ''
     }
   }
 })

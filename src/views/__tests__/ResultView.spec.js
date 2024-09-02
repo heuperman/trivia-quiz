@@ -3,6 +3,8 @@ import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import ResultView from '@/views/ResultView.vue'
 
+const mockRouterPush = vi.fn()
+
 describe('ResultView', () => {
   let wrapper
 
@@ -27,5 +29,17 @@ describe('ResultView', () => {
   it('shows the score', () => {
     const header = wrapper.find('p')
     expect(header.text()).toContain('Your score: 60 / 100')
+  })
+
+  it('redirects to home page on play again button click', async () => {
+    vi.mock('vue-router', async () => ({
+      useRouter: () => ({
+        push: mockRouterPush
+      })
+    }))
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+    expect(mockRouterPush).toHaveBeenCalledWith('/')
   })
 })
