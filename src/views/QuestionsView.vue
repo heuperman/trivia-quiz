@@ -29,7 +29,7 @@ function handleAnswerClick(answer) {
     <h1>Question {{ questionsStore.currentQuestionIndex + 1 }} of 10</h1>
     <p>{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
     <ul>
-        <li v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
+        <li :key="answer" v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
             <button @click="handleAnswerClick(answer)">{{ htmlDecode(answer) }}</button>
         </li>
     </ul>

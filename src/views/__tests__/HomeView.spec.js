@@ -22,7 +22,7 @@ describe('HomeView', () => {
   })
 
   beforeEach(() => {
-    global.fetch = vi.fn().mockImplementation((url) => {
+    window.fetch = vi.fn().mockImplementation((url) => {
       if (url.includes('api_token')) {
         return Promise.resolve({ json: () => Promise.resolve({ token: 'mocked-token' }) })
       } else {
@@ -63,7 +63,7 @@ describe('HomeView', () => {
       ]
     })
 
-    expect(global.fetch).not.toHaveBeenCalledWith(
+    expect(window.fetch).not.toHaveBeenCalledWith(
       'https://opentdb.com/api_token.php?command=request'
     )
   })
@@ -83,7 +83,7 @@ describe('HomeView', () => {
     await nextTick()
 
     const questionsStore = useQuestionsStore()
-    expect(global.fetch).toHaveBeenCalledWith('https://opentdb.com/api_token.php?command=request')
+    expect(window.fetch).toHaveBeenCalledWith('https://opentdb.com/api_token.php?command=request')
     expect(questionsStore.setSessionToken).toHaveBeenCalledWith('mocked-token')
   })
 

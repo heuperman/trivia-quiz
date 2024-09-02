@@ -1,4 +1,4 @@
-import { beforeAll, describe, it, expect, vi, afterEach } from 'vitest'
+import { beforeAll, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import ResultView from '@/views/ResultView.vue'
