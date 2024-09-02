@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 export const useQuestionsStore = defineStore('questions', {
   state: () => ({
     questions: [],
-    currentQuestionIndex: 0
+    currentQuestionIndex: 0,
+    score: 0
   }),
   getters: {
     getCurrentQuestion() {
@@ -13,6 +14,12 @@ export const useQuestionsStore = defineStore('questions', {
   actions: {
     setQuestions(questions) {
       this.questions = questions
+    },
+    incrementQuestionIndex() {
+      this.currentQuestionIndex++
+    },
+    incrementScore() {
+      this.score++
     }
   }
 })
