@@ -1,6 +1,5 @@
 import { beforeAll, describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { setActivePinia, createPinia } from 'pinia'
 import { createTestingPinia } from '@pinia/testing'
 import { useQuestionsStore } from '@/stores/questions'
 import { mockQuestions } from '@/lib/constants'
@@ -23,7 +22,6 @@ describe('HomeView', () => {
   let wrapper
 
   beforeAll(() => {
-    setActivePinia(createPinia())
     global.fetch = vi.fn().mockImplementation((url) => {
       if (url.includes('api_token')) {
         return Promise.resolve({ json: () => Promise.resolve({ token: 'mocked-token' }) })
