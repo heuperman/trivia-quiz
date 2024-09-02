@@ -20,6 +20,10 @@ export const useQuestionsStore = defineStore('questions', {
     },
     incrementScore() {
       this.score++
+    },
+    reset() {
+      this.currentQuestionIndex = 0
+      this.score = 0
     }
   }
 })

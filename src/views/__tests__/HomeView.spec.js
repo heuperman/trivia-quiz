@@ -66,6 +66,15 @@ describe('HomeView', () => {
     )
   })
 
+  it('resets the questions store on start click', async () => {
+    const questionsStore = useQuestionsStore()
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(questionsStore.reset).toHaveBeenCalled()
+  })
+
   it('updates the questions store with the fetched questions', async () => {
     const questionsStore = useQuestionsStore()
 

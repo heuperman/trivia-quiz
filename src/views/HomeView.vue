@@ -11,14 +11,15 @@ const difficulty = ref('medium')
 const sessionToken = ref('')
 
 async function setSessionToken() {
-  const response = await fetch('https://opentdb.com/api_token.php?command=request')
+  const response = await fetch(`${openTriviaApiUrl}/api_token.php?command=request`)
   const data = await response.json()
   sessionToken.value = data.token
 }
 
 async function startQuiz() {
-  const response = await fetch(`https://opentdb.com/api.php?amount=10&difficulty=${difficulty.value}&token=${sessionToken.value}`)
+  const response = await fetch(`${openTriviaApiUrl}/api.php?amount=10&difficulty=${difficulty.value}&token=${sessionToken.value}`)
   const data = await response.json()
+  questionsStore.reset()
   questionsStore.setQuestions(data.results)
   router.push('/questions')
 }
