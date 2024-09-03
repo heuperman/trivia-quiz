@@ -40,3 +40,60 @@ function handleAnswerClick(answer) {
         </ul>
     </main>
 </template>
+
+<style lang="css" module scoped>
+main {
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    gap: 4rem;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.4rem;
+    color: #8a7878;
+}
+
+p {
+    font-size: 2rem;
+    text-align: center;
+    color: var(--color-black);
+    text-wrap: pretty;
+    max-width: 560px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    max-width: 960px;
+}
+
+button {
+    padding: 1rem 2rem;
+    min-width: 240px;
+    width: 100%;
+    font-size: 1.2rem;
+    border: none;
+    color: var(--color-white);
+    background-color: var(--color-blue);
+    border-radius: 30px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--color-dark-blue);
+}
+
+@media (min-width: 1024px) {
+    ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
