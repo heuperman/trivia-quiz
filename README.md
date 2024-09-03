@@ -1,4 +1,6 @@
-# Trivia
+# Quiz Master
+
+Are you the king of the quiz? Prove your deep knowledge of useless facts at: https://quiz-master-beta.vercel.app/
 
 ## Project Setup
 
@@ -73,6 +75,18 @@ For the palette I'll be using some nice colours I found online 😉 The fonts wi
 The logic of the app is relatively simple. I tried to keep it as clear as possible and avoid unnecessary complexity, for example by keeping all the shared state in a single store, and using a function to get the question answers instead of trying to keep component values up to date by destructuring the store into refs (which had unexpected effects on getters). You can find more notes on the decisions I made in the commit messages.
 
 The most complicated and time-consuming task for someone relatively unfamiliar with the Vue ecosystem such as myself was handling state, routing and mocking in the tests. Fortunately, all the tools are well-documented, especially Pinia which has some very useful testing examples.
+
+### Further development
+
+We have a functional quiz now, with basic mobile and desktop styling. You can play it at https://quiz-master-beta.vercel.app/.
+
+There is, of course, a lot left undone. We could use some error handling, both for when requests to the API fail completely, or when the API returns an error code. For example, the user could run out of questions for their session, which we could handle by requesting a new session token and retrying the original request with the new token.
+
+We could use some tests on the button component and on the questions store. I didn't write any tests for the store as the logic of the functions is very simple, but having a test suite could give confidence for others to work on it.
+
+There are all sorts of features to add such as a timer, leader board, question amount and/or category selectors. If we really want to go all out we could make it two player, where whoever clicks the right answer the fastest gets the points. If we do make it competitive we will need to deal with the fact the user can see all the questions and correct answers being returned by the API. We could create a small server that functions as an in-between and only reveals the questions to the user, not the correct answer.
+
+Styling wise we could use some more flavour text and general decoration to make it feel more like a game show. We could show the user how many or which answers they have answered correctly and show them the correct answer when they get it wrong. We could also use some loading states, which could simply be a spinner on the start button or and entire loading screen with some text and images to get the user excited for the quiz.
 
 ## Original Instructions
 
