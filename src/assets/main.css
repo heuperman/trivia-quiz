@@ -7,3 +7,13 @@
   padding: 2rem;
   font-weight: normal;
 }
+
+main {
+  min-height: calc(100vh - 4rem);
+  width: 100%;
+  display: flex;
+  gap: 4rem;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}

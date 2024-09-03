@@ -32,9 +32,9 @@ function handleAnswerClick(answer) {
 
 <template>
     <main v-if="questionsStore.getCurrentQuestion?.question">
-        <h1>Question {{ questionsStore.currentQuestionIndex + 1 }} of 10</h1>
-        <p>{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
-        <ul>
+        <h1 :class="$style.question_progress">Question {{ questionsStore.currentQuestionIndex + 1 }} of 10</h1>
+        <p :class="$style.question">{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
+        <ul :class="$style.answer_list">
             <li :key="answer" v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
                 <ButtonDefault :text="htmlDecode(answer)" @click="handleAnswerClick(answer)" wide="true" />
             </li>
@@ -43,22 +43,12 @@ function handleAnswerClick(answer) {
 </template>
 
 <style lang="css" module>
-main {
-    min-height: calc(100vh - 4rem);
-    width: 100%;
-    display: flex;
-    gap: 4rem;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h1 {
+.question_progress {
     font-size: 1.4rem;
     color: var(--color-text-grey);
 }
 
-p {
+.question {
     font-size: 2rem;
     text-align: center;
     color: var(--color-black);
@@ -66,7 +56,7 @@ p {
     max-width: 560px;
 }
 
-ul {
+.answer_list {
     list-style-type: none;
     padding: 0;
     display: grid;
@@ -77,7 +67,7 @@ ul {
 }
 
 @media (min-width: 1024px) {
-    ul {
+    .answer_list {
         grid-template-columns: repeat(2, 1fr);
     }
 }

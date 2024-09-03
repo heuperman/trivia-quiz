@@ -9,8 +9,8 @@ const questionsStore = useQuestionsStore()
 
 <template>
     <main>
-        <h1>Result</h1>
-        <p>Your score: <span :class="{
+        <h1 :class="$style.title">Result</h1>
+        <p :class="$style.score">Your score: <span :class="{
             [$style.good]: questionsStore.score >= 8,
             [$style.average]: questionsStore.score >= 5,
             [$style.bad]: questionsStore.score < 5
@@ -21,21 +21,12 @@ const questionsStore = useQuestionsStore()
 </template>
 
 <style lang="css" module>
-main {
-    min-height: calc(100vh - 4rem);
-    display: flex;
-    gap: 4rem;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h1 {
+.title {
     font-size: 1.4rem;
     color: var(--color-text-grey);
 }
 
-p {
+.score {
     font-size: 2rem;
     text-align: center;
     color: var(--color-black);
