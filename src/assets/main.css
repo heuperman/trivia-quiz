@@ -17,3 +17,13 @@ main {
   justify-content: space-between;
   align-items: center;
 }
+
+@supports (height: 100dvh) {
+  #app {
+    min-height: 100dvh;
+  }
+
+  main {
+    min-height: calc(100dvh - 4rem);
+  }
+}
