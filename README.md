@@ -68,6 +68,12 @@ We can already determine from these sketches that we can create a reusable butto
 
 For the palette I'll be using some nice colours I found online 😉 The fonts will come from Google Fonts. For the title we've got Acme, a cartoony font, and for the main text we'll have Lato, a simple rounded font. These fonts match the fun & playful nature of the app.
 
+### Logic
+
+The logic of the app is relatively simple. I tried to keep it as clear as possible and avoid unnecessary complexity, for example by keeping all the shared state in a single store, and using a function to get the question answers instead of trying to keep component values up to date by destructuring the store into refs (which had unexpected effects on getters). You can find more notes on the decisions I made in the commit messages.
+
+The most complicated and time-consuming task for someone relatively unfamiliar with the Vue ecosystem such as myself was handling state, routing and mocking in the tests. Fortunately, all the tools are well-documented, especially Pinia which has some very useful testing examples.
+
 ## Original Instructions
 
 ### Introduction
