@@ -6,6 +6,10 @@ import { htmlDecode, shuffleArray } from '@/lib/helpers'
 const router = useRouter()
 const questionsStore = useQuestionsStore()
 
+if (!questionsStore.getCurrentQuestion?.question) {
+    router.push('/')
+}
+
 function getAnswers(question) {
     return question.type === 'boolean'
         ? ['True', 'False']
@@ -26,11 +30,13 @@ function handleAnswerClick(answer) {
 </script>
 
 <template>
-    <h1>Question {{ questionsStore.currentQuestionIndex + 1 }} of 10</h1>
-    <p>{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
-    <ul>
-        <li :key="answer" v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
-            <button @click="handleAnswerClick(answer)">{{ htmlDecode(answer) }}</button>
-        </li>
-    </ul>
+    <main v-if="questionsStore.getCurrentQuestion?.question">
+        <h1>Question {{ questionsStore.currentQuestionIndex + 1 }} of 10</h1>
+        <p>{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
+        <ul>
+            <li :key="answer" v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
+                <button @click="handleAnswerClick(answer)">{{ htmlDecode(answer) }}</button>
+            </li>
+        </ul>
+    </main>
 </template>
