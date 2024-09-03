@@ -2,6 +2,7 @@
 import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores/questions'
 import { htmlDecode, shuffleArray } from '@/lib/helpers'
+import ButtonDefault from '@/components/ButtonDefault.vue';
 
 const router = useRouter()
 const questionsStore = useQuestionsStore()
@@ -35,15 +36,16 @@ function handleAnswerClick(answer) {
         <p>{{ htmlDecode(questionsStore.getCurrentQuestion.question) }}</p>
         <ul>
             <li :key="answer" v-for="answer in getAnswers(questionsStore.getCurrentQuestion)">
-                <button @click="handleAnswerClick(answer)">{{ htmlDecode(answer) }}</button>
+                <ButtonDefault :text="htmlDecode(answer)" @click="handleAnswerClick(answer)" wide="true" />
             </li>
         </ul>
     </main>
 </template>
 
-<style lang="css" module scoped>
+<style lang="css" module>
 main {
     min-height: calc(100vh - 4rem);
+    width: 100%;
     display: flex;
     gap: 4rem;
     flex-direction: column;
@@ -53,7 +55,7 @@ main {
 
 h1 {
     font-size: 1.4rem;
-    color: #8a7878;
+    color: var(--color-text-grey);
 }
 
 p {
@@ -72,23 +74,6 @@ ul {
     gap: 1rem;
     width: 100%;
     max-width: 960px;
-}
-
-button {
-    padding: 1rem 2rem;
-    min-width: 240px;
-    width: 100%;
-    font-size: 1.2rem;
-    border: none;
-    color: var(--color-white);
-    background-color: var(--color-blue);
-    border-radius: 30px;
-    font-weight: 400;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: var(--color-dark-blue);
 }
 
 @media (min-width: 1024px) {
