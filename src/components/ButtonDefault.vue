@@ -3,7 +3,7 @@ defineProps(['text', 'wide'])
 </script>
 
 <template>
-    <button @click="onClick" :class="{ [$style.button]: true, [$style.wide]: wide }">
+    <button :class="{ [$style.button]: true, [$style.wide]: wide }">
         {{ text }}
     </button>
 </template>
