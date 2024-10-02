@@ -1,15 +1,15 @@
 import { nextTick } from 'vue'
-import { beforeAll, describe, it, expect, vi, afterEach, beforeEach } from 'vitest'
+import { beforeAll, describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { useQuestionsStore } from '@/stores/questions'
-import { mockQuestions } from '@/lib/constants'
 import HomeView from '@/views/HomeView.vue'
 
 const mockRouterPush = vi.fn()
 
 describe('HomeView', () => {
   let wrapper
+  let questionsStore
 
   beforeAll(() => {
     wrapper = mount(HomeView, {
@@ -18,16 +18,6 @@ describe('HomeView', () => {
           createSpy: vi.fn
         })
       ]
-    })
-  })
-
-  beforeEach(() => {
-    window.fetch = vi.fn().mockImplementation((url) => {
-      if (url.includes('api_token')) {
-        return Promise.resolve({ json: () => Promise.resolve({ token: 'mocked-token' }) })
-      } else {
-        return Promise.resolve({ json: () => Promise.resolve({ results: mockQuestions }) })
-      }
     })
   })
 
@@ -51,7 +41,7 @@ describe('HomeView', () => {
     expect(wrapper.vm.difficulty).toBe('hard')
   })
 
-  it('if there is a session token, does not fetch a new session token', async () => {
+  it('if there is a session token, does not start a new session', async () => {
     wrapper = mount(HomeView, {
       plugins: [
         createTestingPinia({
@@ -62,13 +52,13 @@ describe('HomeView', () => {
         })
       ]
     })
+    questionsStore = useQuestionsStore()
 
-    expect(window.fetch).not.toHaveBeenCalledWith(
-      'https://opentdb.com/api_token.php?command=request'
-    )
+    expect(questionsStore.startSession).not.toHaveBeenCalled()
   })
 
-  it('if there is no session token, fetches a session token and sets it in the question store', async () => {
+  it('if there is no session token, starts a new session', async () => {
+    questionsStore = useQuestionsStore()
     wrapper = mount(HomeView, {
       plugins: [
         createTestingPinia({
@@ -79,39 +69,14 @@ describe('HomeView', () => {
         })
       ]
     })
+    questionsStore = useQuestionsStore()
 
     await nextTick()
-
-    const questionsStore = useQuestionsStore()
-    expect(window.fetch).toHaveBeenCalledWith('https://opentdb.com/api_token.php?command=request')
-    expect(questionsStore.setSessionToken).toHaveBeenCalledWith('mocked-token')
-  })
-
-  it('fetches questions using the session token and difficulty on start click', async () => {
-    wrapper = mount(HomeView, {
-      plugins: [
-        createTestingPinia({
-          createSpy: vi.fn,
-          initialState: {
-            questions: { sessionToken: 'mocked-token' }
-          }
-        })
-      ]
-    })
-
-    const select = wrapper.find('select')
-    await select.setValue('easy')
-
-    const button = wrapper.find('button')
-    await button.trigger('click')
-
-    expect(fetch).toHaveBeenCalledWith(
-      'https://opentdb.com/api.php?amount=10&difficulty=easy&token=mocked-token'
-    )
+    expect(questionsStore.startSession).toHaveBeenCalled()
   })
 
   it('resets the questions store on start click', async () => {
-    const questionsStore = useQuestionsStore()
+    questionsStore = useQuestionsStore()
 
     const button = wrapper.find('button')
     await button.trigger('click')
@@ -119,13 +84,16 @@ describe('HomeView', () => {
     expect(questionsStore.reset).toHaveBeenCalled()
   })
 
-  it('updates the questions store with the fetched questions', async () => {
-    const questionsStore = useQuestionsStore()
+  it('gets the questions with the right difficulty on start click', async () => {
+    questionsStore = useQuestionsStore()
+
+    const select = wrapper.find('select')
+    await select.setValue('easy')
 
     const button = wrapper.find('button')
     await button.trigger('click')
 
-    expect(questionsStore.setQuestions).toHaveBeenCalledWith(mockQuestions)
+    expect(questionsStore.getQuestions).toHaveBeenCalledWith('easy')
   })
 
   it('pushes the questions route on start click', async () => {

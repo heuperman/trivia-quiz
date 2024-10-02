@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuestionsStore } from '@/stores/questions'
-import { openTriviaApiUrl } from '@/lib/constants'
 import ButtonDefault from '@/components/ButtonDefault.vue';
 
 const router = useRouter()
@@ -10,22 +9,13 @@ const questionsStore = useQuestionsStore()
 
 const difficulty = ref('medium')
 
-async function setSessionToken() {
-  const response = await fetch(`${openTriviaApiUrl}/api_token.php?command=request`)
-  const data = await response.json()
-  questionsStore.setSessionToken(data.token)
-}
-
-async function startQuiz() {
-  const response = await fetch(`${openTriviaApiUrl}/api.php?amount=10&difficulty=${difficulty.value}&token=${questionsStore.sessionToken}`)
-  const data = await response.json()
-  questionsStore.reset()
-  questionsStore.setQuestions(data.results)
-  router.push('/questions')
-}
-
 if (!questionsStore.sessionToken) {
-  setSessionToken()
+  questionsStore.startSession()
+}
+async function startQuiz() {
+  questionsStore.reset()
+  await questionsStore.getQuestions(difficulty.value)
+  router.push('/questions')
 }
 </script>
 

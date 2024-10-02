@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { openTriviaApiUrl } from '@/lib/constants'
 
 export const useQuestionsStore = defineStore('questions', {
   state: () => ({
@@ -13,8 +14,12 @@ export const useQuestionsStore = defineStore('questions', {
     }
   },
   actions: {
-    setQuestions(questions) {
-      this.questions = questions
+    async getQuestions(difficulty) {
+      const response = await fetch(
+        `${openTriviaApiUrl}/api.php?amount=10&difficulty=${difficulty}&token=${this.sessionToken}`
+      )
+      const data = await response.json()
+      this.questions = data.results
     },
     incrementQuestionIndex() {
       this.currentQuestionIndex++
@@ -26,11 +31,10 @@ export const useQuestionsStore = defineStore('questions', {
       this.currentQuestionIndex = 0
       this.score = 0
     },
-    setSessionToken(sessionToken) {
-      this.sessionToken = sessionToken
-    },
-    clearSessionToken() {
-      this.sessionToken = ''
+    async startSession() {
+      const response = await fetch(`${openTriviaApiUrl}/api_token.php?command=request`)
+      const data = await response.json()
+      this.sessionToken = data.token
     }
   }
 })
